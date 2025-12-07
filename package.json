@@ -1,0 +1,48 @@
+{
+    "name": "menubar-web-apps",
+    "version": "1.1.0",
+    "description": "A MenuBar X alternative for macOS - add any website to your menu bar",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron .",
+        "build": "electron-builder --mac",
+        "pack": "electron-builder --dir"
+    },
+    "author": "Omkar",
+    "license": "MIT",
+    "devDependencies": {
+        "electron": "^28.0.0",
+        "electron-builder": "^24.9.1"
+    },
+    "dependencies": {
+        "electron-store": "^8.1.0"
+    },
+    "build": {
+        "appId": "com.omkar.menubar-web-apps",
+        "productName": "MenuBar Web Apps",
+        "mac": {
+            "category": "public.app-category.utilities",
+            "target": [
+                {
+                    "target": "dir",
+                    "arch": [
+                        "x64",
+                        "arm64"
+                    ]
+                }
+            ],
+            "icon": "assets/icon.png",
+            "darkModeSupport": true
+        },
+        "files": [
+            "**/*",
+            "!**/*.md",
+            "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
+            "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
+            "!**/node_modules/.bin"
+        ],
+        "directories": {
+            "output": "dist"
+        }
+    }
+}

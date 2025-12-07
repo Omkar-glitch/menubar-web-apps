@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a2e;
+        }
+
+        .window-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .title-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            background: linear-gradient(180deg, #2a2a4a 0%, #1a1a2e 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            -webkit-app-region: drag;
+            user-select: none;
+        }
+
+        .title-bar-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #fff;
+            opacity: 0.9;
+        }
+
+        .title-bar-buttons {
+            display: flex;
+            gap: 8px;
+            -webkit-app-region: no-drag;
+        }
+
+        .title-bar-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .title-bar-btn:hover {
+            opacity: 0.8;
+        }
+
+        .btn-close {
+            background: #ff5f57;
+        }
+
+        .btn-minimize {
+            background: #ffbd2e;
+        }
+
+        .btn-reload {
+            background: #28c840;
+        }
+
+        .webview-container {
+            flex: 1;
+            position: relative;
+        }
+
+        webview {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            margin-left: 8px;
+            animation: spin 1s linear infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="window-container">
+        <div class="title-bar">
+            <div class="title-bar-buttons">
+                <button class="title-bar-btn btn-close" onclick="window.close()" title="Close"></button>
+                <button class="title-bar-btn btn-minimize" onclick="hideWindow()" title="Hide"></button>
+                <button class="title-bar-btn btn-reload" onclick="reloadWebview()" title="Reload"></button>
+            </div>
+            <span class="title-bar-title" id="site-title">Loading...</span>
+        </div>
+        <div class="webview-container">
+            <div class="loading" id="loading">Loading</div>
+            <webview id="webview" allowpopups></webview>
+        </div>
+    </div>
+
+    <script>
+        // Parse URL parameters
+        const params = new URLSearchParams(window.location.search);
+        const siteUrl = params.get('url');
+        const siteName = params.get('name');
+
+        // Set title
+        document.getElementById('site-title').textContent = siteName || 'Website';
+
+        // Initialize webview
+        const webview = document.getElementById('webview');
+        const loading = document.getElementById('loading');
+
+        webview.src = siteUrl;
+
+        webview.addEventListener('did-start-loading', () => {
+            loading.style.display = 'block';
+        });
+
+        webview.addEventListener('did-stop-loading', () => {
+            loading.style.display = 'none';
+        });
+
+        webview.addEventListener('did-fail-load', (e) => {
+            if (e.errorCode !== -3) { // Ignore aborted loads
+                loading.textContent = 'Failed to load';
+                loading.style.display = 'block';
+            }
+        });
+
+        function hideWindow() {
+            window.close();
+        }
+
+        function reloadWebview() {
+            webview.reload();
+        }
+    </script>
+</body>
+
+</html>

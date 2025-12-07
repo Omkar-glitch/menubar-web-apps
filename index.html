@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MenuBar Web Apps</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <div class="header-content">
+        <div class="app-icon">🌐</div>
+        <div>
+          <h1>MenuBar Web Apps</h1>
+          <p class="subtitle">Add any website to your menu bar</p>
+        </div>
+      </div>
+    </header>
+
+    <section class="add-site">
+      <h2>➕ Add New Site</h2>
+      <form id="add-site-form">
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label for="site-name">Name</label>
+            <input type="text" id="site-name" placeholder="e.g., ChatGPT" required>
+          </div>
+          <div class="form-group color-group">
+            <label for="site-color">Color</label>
+            <input type="color" id="site-color" value="#007AFF" title="Fallback color if favicon fails">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="site-url">URL</label>
+          <input type="url" id="site-url" placeholder="https://chatgpt.com" required>
+        </div>
+        <button type="submit" class="btn-primary">
+          <span class="btn-icon">+</span> Add to Menu Bar
+        </button>
+      </form>
+    </section>
+
+    <section class="quick-add">
+      <h2>⚡ Quick Add</h2>
+      <div class="quick-buttons">
+        <button class="quick-btn chatgpt" data-name="ChatGPT" data-url="https://chatgpt.com" data-color="#10A37F">
+          <span class="quick-icon">💬</span>
+          <span>ChatGPT</span>
+        </button>
+        <button class="quick-btn gemini" data-name="Gemini" data-url="https://gemini.google.com" data-color="#4285F4">
+          <span class="quick-icon">✨</span>
+          <span>Gemini</span>
+        </button>
+        <button class="quick-btn perplexity" data-name="Perplexity" data-url="https://perplexity.ai"
+          data-color="#1FB8CD">
+          <span class="quick-icon">🔍</span>
+          <span>Perplexity</span>
+        </button>
+        <button class="quick-btn claude" data-name="Claude" data-url="https://claude.ai" data-color="#D97757">
+          <span class="quick-icon">🧠</span>
+          <span>Claude</span>
+        </button>
+        <button class="quick-btn grok" data-name="Grok" data-url="https://grok.x.ai" data-color="#1DA1F2">
+          <span class="quick-icon">𝕏</span>
+          <span>Grok</span>
+        </button>
+        <button class="quick-btn copilot" data-name="Copilot" data-url="https://copilot.microsoft.com"
+          data-color="#7B61FF">
+          <span class="quick-icon">🤖</span>
+          <span>Copilot</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="sites-list">
+      <h2>📌 Your Sites</h2>
+      <div id="sites-container">
+        <p class="empty-state">
+          <span class="empty-icon">📭</span>
+          No sites added yet.<br>
+          <span class="empty-hint">Add your first site above or use Quick Add!</span>
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-tips">
+        <p>💡 <strong>Tip:</strong> Right-click a menu bar icon to change its icon or remove it</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+
+</html>
